@@ -7,6 +7,13 @@ Original file is located at
     https://colab.research.google.com/drive/1WdvltM3IW7cxYI9AbkS7NK2SAG_gorIm
 """
 
+import os
+import sys
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 # Commented out IPython magic to ensure Python compatibility.
 # Installing Required Libraries
 # %pip install python-docx
@@ -94,9 +101,10 @@ def extract_text_from_pdf(pdf_path):
 
 # Configuration des clés API (remplacez par vos propres clés)
 
-os.environ['HuggingFaceHub_API_Token']= 'YOUR_HUGGINGFACE_API_TOKEN'
-# os.environ['GOOGLE_API_KEY']= "YOUR_GOOGLE_API_KEY"
-os.environ['cohere_api_key'] = "YOUR_COHERE_API_KEY"
+# Get API tokens from environment variables
+os.environ['HuggingFaceHub_API_Token'] = os.getenv('HUGGINGFACE_API_TOKEN', 'YOUR_HUGGINGFACE_API_TOKEN')
+# os.environ['GOOGLE_API_KEY'] = os.getenv('GOOGLE_API_KEY', 'YOUR_GOOGLE_API_KEY')
+os.environ['cohere_api_key'] = os.getenv('COHERE_API_KEY', 'YOUR_COHERE_API_KEY')
 
 # Vérification si l'index FAISS est déjà sauvegardé
 if os.path.exists(faiss_index_path):
@@ -119,9 +127,9 @@ else:
     chunks = text_splitter.split_text(text=all_text)
     print(f"Total chunks created: {len(chunks)}")
 
-    # Configuration des clés API (remplacez par vos propres clés)
-    os.environ['HuggingFaceHub_API_Token']= 'YOUR_HUGGINGFACE_API_TOKEN'
-    os.environ['cohere_api_key'] = "YOUR_COHERE_API_KEY"
+    # Get API tokens from environment variables
+    os.environ['HuggingFaceHub_API_Token'] = os.getenv('HUGGINGFACE_API_TOKEN', 'YOUR_HUGGINGFACE_API_TOKEN')
+    os.environ['cohere_api_key'] = os.getenv('COHERE_API_KEY', 'YOUR_COHERE_API_KEY')
 
     # Initialisation du modèle d'embeddings
     embeddings = HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')

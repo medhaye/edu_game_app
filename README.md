@@ -58,7 +58,16 @@ edu_game_3/
    pip install -r requirements.txt
    ```
 
-4. Run the game:
+4. Set up environment variables:
+   - Create a `.env` file in the root directory with the following API keys:
+   ```
+   HUGGINGFACE_API_TOKEN=your_huggingface_token
+   COHERE_API_KEY=your_cohere_api_key
+   ```
+   - These API keys are required for the RAG system to work properly
+   - You can obtain API keys from [Hugging Face](https://huggingface.co/settings/tokens) and [Cohere](https://dashboard.cohere.ai/api-keys)
+
+5. Run the game:
    ```
    python run_game.py
    ```
@@ -84,3 +93,24 @@ The `docs` directory contains PDF files about environmental issues in Tunisia th
 - 15727-WB_Tunisia Country Profile-WEB.pdf
 - Environment and sustainable Tunisia.pdf
 - Maghreb-Technical-Note-11.pdf
+
+## FAISS Index Management
+
+The game uses a FAISS index file (`faiss_index.pkl`) for the RAG system to efficiently retrieve information from the PDF documents. This file is pre-built and included in the repository.
+
+If you need to regenerate the FAISS index (e.g., if you add new documents):
+
+1. Delete the existing `faiss_index.pkl` file
+2. Run the game - it will automatically rebuild the index from the documents in the `docs` directory (this may take a few minutes)
+3. The new index will be saved to `faiss_index.pkl` for future use
+
+## Development
+
+### Environment Setup
+
+For development, ensure you have:
+
+1. A virtual environment activated (`game_venv`)
+2. All dependencies installed (`requirements.txt`)
+3. API keys set up in a `.env` file (not tracked by git)
+4. Proper access to the FAISS index
